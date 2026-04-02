@@ -1,0 +1,41 @@
+# Name shown in the Actions tab on GitHub
+name: Terraform Deploy
+
+# When to run: on push to main branch only
+on:
+  push:
+    branches:
+      - main
+
+# AWS credentials pulled from GitHub Secrets
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+# Single job called "deploy"
+jobs:
+  deploy:
+    # Runs on a GitHub-hosted Ubuntu machine
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Pull your repo code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Terraform on the runner
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # Step 3: Download providers (e.g. AWS provider)
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 4: Show what Terraform will create/change/destroy
+      - name: Terraform Plan
+        run: terraform plan
+
+      # Step 5: Apply the changes to AWS — no confirmation prompt
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
