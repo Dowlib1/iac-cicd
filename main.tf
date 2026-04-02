@@ -83,7 +83,7 @@ resource "aws_security_group" "my_sg" {
   }
 }
 
-7. EC2 Instance in the Subnet
+# 7.  EC2 Instance in the Subnet
 resource "aws_instance" "my_ec2" {
   ami                         = var.ami_id
   instance_type               = var.instance_type
