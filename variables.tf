@@ -1,10 +1,10 @@
 variable "region" {
-  default = "us-west-3"
+  default = "eu-west-3"
 }
 
 variable "ami_id" {
   description = "Ubuntu Server 24.04 LTS"
-  default     = "ami-0d8c303e6b2e300dd"
+  default     = "ami-04b8aa78946b54b56"
 }
 
 variable "instance_type" {
